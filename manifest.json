@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Telegram Unsubscriber",
+  "description": "The extension helps to clean up Telegram subscriptions and leave unwanted channels in few clicks",
+  "icons": {
+    "16": "logo/logo-16.png",
+    "48": "logo/logo-48.png",
+    "128": "logo/logo-128.png"
+  },
+  "version": "0.1.0",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["https://web.telegram.org/k/*"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://web.telegram.org/k/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    :root {
+      --color-primary: #3490EC;
+      --color-primary-hover: #287dc8;
+      --color-danger: #ff4d4f;
+      --color-danger-hover: #ff7875;
+      --color-disabled: #cccccc;
+      --color-border: #cccccc;
+      --color-surface: #fafafa;
+      --color-text: #333333;
+      --color-text-muted: #555555;
+      --space-sm: 8px;
+      --space-md: 12px;
+    }
+    body {
+      width: 360px;
+      padding: var(--space-md);
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 1rem;
+      background: #ffffff;
+      color: var(--color-text);
+    }
+    h1 {
+      margin: 0 0 var(--space-md);
+      color: var(--color-primary);
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+    a {
+      color: var(--color-primary);
+      text-decoration-thickness: 0.5px;
+      text-underline-offset: 0.2rem
+    }
+    button {
+      width: 100%;
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: var(--space-md);
+    }
+    button:disabled {
+      background: var(--color-disabled);
+      cursor: not-allowed;
+    }
+    button:hover:not(:disabled) {
+      background: var(--color-primary-hover);
+    }
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--color-primary);
+      border: 1px solid var(--color-primary);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background: #f0f7ff;
+    }
+    .btn-danger {
+      background: var(--color-danger);
+    }
+    .btn-danger:hover:not(:disabled) {
+      background: var(--color-danger-hover);
+    }
+    #channelListContainer {
+      display: none;
+      max-height: 180px;
+      overflow-y: auto;
+      border-radius: 4px;
+      margin-bottom: var(--space-md);
+    }
+    .list-header {
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-sm);
+      display: flex;
+      justify-content: space-between;
+    }
+    .select-all-btn {
+      color: var(--color-primary);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .channel-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .channel-item input[type="checkbox"] {
+      margin-right: var(--space-sm);
+      cursor: pointer;
+    }
+    .channel-item label {
+      cursor: pointer;
+      word-break: break-all;
+    }
+    #confirmDialog {
+      display: none;
+      border: 1px solid var(--color-danger);
+      padding: var(--space-md);
+      border-radius: 4px;
+      background: #fff2f0;
+      margin-bottom: var(--space-md);
+    }
+    #confirmMessage {
+      font-weight: bold;
+      margin-bottom: var(--space-md);
+      line-height: 1.4;
+    }
+    #confirmYes {
+      background: var(--color-danger) !important;
+    }
+    #log {
+      width: 100%;
+      height: 100px;
+      box-sizing: border-box;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: var(--space-md);
+      font-family: monospace;
+      font-size: 0.8rem;
+      background: var(--color-surface);
+      overflow-y: scroll;
+      resize: none;
+      margin-top: var(--space-sm);
+    }
+    #mainInterface, #wrongTabInterface {
+      display: none;
+    }
+    #wrongTabInterface {
+      text-align: center;
+      padding: 10px 5px;
+    }
+    #wrongTabInterface p {
+      line-height: 1.5;
+      margin-bottom: var(--space-md);
+      color: #666666;
+    }
+    .log-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-top: var(--space-sm);
+      color: var(--color-text-muted);
+    }
+  </style>
+</head>
+<body>
+  <h1>Telegram Unsubscriber</h1>
+
+  <div id="wrongTabInterface">
+    <p>This extension only works on <a href="https://web.telegram.org/k/" target="_blank">web.telegram.org/k/</a></p>
+    <button id="redirectToWebK">Open Telegram Web K</button>
+  </div>
+
+  <div id="mainInterface">
+    <div id="confirmDialog">
+      <div id="confirmMessage"></div>
+      <div style="display: flex; gap: var(--space-sm);">
+        <button id="confirmYes" style="margin-bottom: 0; padding: var(--space-sm);">Yes, unsubscribe</button>
+        <button id="confirmNo" class="btn-secondary" style="margin-bottom: 0; padding: var(--space-sm);">Cancel</button>
+      </div>
+    </div>
+
+    <button id="scanChannelsBtn">Scan Channels</button>
+    <button id="leaveSelectedBtn" class="btn-danger" style="display: none;">Unsubscribe from selected</button>
+
+    <div id="channelListContainer">
+      <div class="list-header">
+        <span>Channels to unsubscribe:</span>
+        <span class="select-all-btn" id="toggleSelectAll">Uncheck all</span>
+      </div>
+      <div id="channelListItems"></div>
+    </div>
+
+    <label class="log-label">Log:</label>
+    <textarea id="log" readonly placeholder=""></textarea>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

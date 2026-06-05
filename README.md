@@ -2,7 +2,7 @@
 
 The extension chromium-based browsers that helps to clean up Telegram subscriptions and leave unwanted channels
 
-<img width="562" height="389" alt="image 2" src="https://github.com/user-attachments/assets/a116069d-b1ce-4fb1-943f-cf59c3cc87f9" />
+<img width="843" height="583" alt="image 2" src="https://github.com/user-attachments/assets/a116069d-b1ce-4fb1-943f-cf59c3cc87f9" />
 
 # How to use
 1. Open Telegram Web K.

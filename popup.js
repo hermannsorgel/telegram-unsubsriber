@@ -248,6 +248,22 @@ document.getElementById('leaveSelectedBtn').addEventListener('click', () => {
         UI.setBusy(false);
         return;
       }
+
+      // This listens to window.postMessage and forwards to the popup
+      await chrome.scripting.executeScript({
+        target: { tabId: activeTab.id },
+        func: () => {
+          if (window.__tgLogBridge) return; // Prevent double-injection
+          window.__tgLogBridge = true;
+          window.addEventListener('message', (event) => {
+            if (event.data?.type === 'TG_CLEANER_LOG') {
+              // Forward to popup, silently fail if popup is closed
+              chrome.runtime.sendMessage(event.data).catch(() => {});
+            }
+          });
+        },
+      });
+
       // User Confirmed Action
       await chrome.storage.local.set({ isCleaning: true });
       chrome.scripting.executeScript({
